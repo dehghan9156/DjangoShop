@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'rest_framework',
     'drf_yasg',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}

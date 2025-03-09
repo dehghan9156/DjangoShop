@@ -16,8 +16,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from rest_framework.generics import CreateAPIView
 from accounts.models import User
-from .serialization import RegisterSerializer
-
+from .serialization import RegisterSerializer,TokenCustomObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegisterApiView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -29,3 +29,6 @@ class RegisterApiView(generics.GenericAPIView):
             data ={"email":email}
             return Response(data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TokenCustomObtainPairView(TokenObtainPairView):
+    serializer_class = TokenCustomObtainPairSerializer

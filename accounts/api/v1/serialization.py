@@ -1,7 +1,7 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, exceptions
 from ...models import User
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class RegisterSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(max_length=250,write_only=True)
@@ -25,3 +25,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("confirm_password",None)
         return User.objects.create_user(**validated_data)
+
+class TokenCustomObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        print(data)
+        data["email"] = self.user.email
+        data["user_id"] = self.user.pk
+        return data
