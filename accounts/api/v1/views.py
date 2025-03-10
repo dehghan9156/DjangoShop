@@ -2,6 +2,7 @@ from http.client import responses
 from django.conf import settings
 from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404
+from django.template.context_processors import request
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,8 +11,9 @@ from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from rest_framework.generics import CreateAPIView
-from accounts.models import User
-from .serialization import RegisterSerializer,TokenCustomObtainPairSerializer,ChangePasswordSerializer
+from accounts.models import User,Profile
+from .serialization import (RegisterSerializer,TokenCustomObtainPairSerializer,
+                            ChangePasswordSerializer,DisplayProfileUserSerializer)
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegisterApiView(generics.GenericAPIView):
@@ -51,3 +53,13 @@ class ChangePasswordView(generics.GenericAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DisplayProfileUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = DisplayProfileUserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Profile.objects.all()
+
+    def get_object(self):
+        queryset = self.queryset
+        profile = get_object_or_404(queryset,user=self.request.user)
+        return profile

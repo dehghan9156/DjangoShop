@@ -1,6 +1,6 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, exceptions
-from ...models import User
+from ...models import User,Profile
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -52,3 +52,8 @@ class ChangePasswordSerializer(serializers.Serializer):
 
         return attrs
 
+
+class DisplayProfileUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["first_name","last_name","description","created_date"]
