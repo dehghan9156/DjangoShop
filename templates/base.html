@@ -56,11 +56,11 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Logout</a>
+                        <a class="nav-link text-white" href="{% url 'accounts:user-logout' %}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Login</a>
+                        <a class="nav-link text-white" href="{% url 'accounts:user-login' %}">Login</a>
                     </li>
                 {% endif %}
             </ul>
@@ -73,6 +73,7 @@
 <!-- Main Content -->
 <div class="container my-4 content">
     {% block content %}
+        {% include 'messages.html' %}
         <!-- Page-specific content will go here -->
     {% endblock %}
 </div>

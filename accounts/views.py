@@ -18,29 +18,32 @@ class IndexView(View):
     def get(self,request):
         return HttpResponse("yes")
 
-class UserLoginView(LoginView):
-    form_class = LoginUserForm
-    template_name = 'accounts/user_login.html'
-    # redirect_authenticated_user = True
+class UserLoginView(View):
+    def get(self,request):
+        form = LoginUserForm()
+        return render(request,'accounts/user_login.html',{'form':form})
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
+    def post(self,request):
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request,username=cd['email'],password=cd['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'User Login Successfully', 'success')
+                return redirect('product:product-list')
+            else:
+                messages.error(request, 'User not found', 'error')
+        else:
+            messages.error(request, 'Invalid form submission', 'error')
 
-    def get_default_redirect_url(self):
-        return reverse_lazy('accounts:index-accounts')
+        return render(request, 'accounts/user_login.html', {'form': form})
 
-class UserLogoutView(LogoutView):
-    """
-    Log out the user and display the 'You are logged out' message.
-    """
-    http_method_names = ["post", "options"]
-    template_name = "accounts/user_logout.html"
-    extra_context = None
-
-    def get_next_page(self):
-        return reverse_lazy('accounts:login-user')
+class UserLogoutView(View):
+    def get(self,request):
+        logout(request)
+        messages.success(request, 'User Logout Successfully', 'success')
+        return redirect('product:product-list')
 
 class UserRegisterView(View):
     form_class = RegisterUserForm
