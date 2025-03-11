@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-start">
+                <img src="{{ product.image }}" height="515" width="515">
+            </div>
+            <div class="col-md-6 text-start">
+                <h2>{{ product.price }}</h2><br>
+                <h2>{{ product.stock }}</h2><br>
+                <h2>{{ product.description }}</h2><br>
+                <a href="#" class="btn btn-primary">Primary</a>
+                <a href="#" class="btn btn-primary">Primary</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

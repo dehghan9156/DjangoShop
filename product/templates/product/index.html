@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container overflow-hidden text-center">
+        <div class="row">
+            {% for pro in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <a href="{% url 'product:product-detail' pro.pk %}"><img src="{{ pro.image }}" width="250" height="250" class="img-fluid"></a>
+                        <h2>{{ pro.name }}</h2><hr>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

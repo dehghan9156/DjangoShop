@@ -17,10 +17,12 @@ Including another URLconf
 from django.urls import path, include
 
 from accounts.api.v1.urls import app_name
+from . import views
 
 app_name = 'product'
 
 urlpatterns = [
     path("",views.ProductListView.as_view(),name="product-list"),
-
+    path("detail/<int:pk>/",views.ProductDetailView.as_view(),name="product-detail"),
+    path("update/<int:pk>/",views.ProductUpdateView.as_view(),name='product-update'),
 ]
