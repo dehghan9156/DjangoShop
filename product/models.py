@@ -7,7 +7,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
-    image = models.ImageField(upload_to='products/')  # فیلد تصویر
+    image = models.ImageField(upload_to='products/',blank=True,null=True)  # فیلد تصویر
 
     def __str__(self):
         return f"{self.id}--{self.name}"

@@ -1,9 +1,9 @@
-from django.views.generic import ListView,DetailView,UpdateView
+from django.views.generic import ListView,DetailView,UpdateView,DeleteView,CreateView
 from django.shortcuts import render,redirect
 from rest_framework.reverse import reverse_lazy
 
 from .models import Product,Category
-from .forms import ProductUpdateForm
+from .forms import ProductCreateUpdateForm
 from django.contrib import messages
 
 
@@ -22,7 +22,7 @@ class ProductDetailView(DetailView):
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'product/update.html'
-    form_class = ProductUpdateForm
+    form_class = ProductCreateUpdateForm
 
     def get_success_url(self):
         return reverse_lazy('product:product-detail', kwargs={'pk': self.object.pk})
@@ -35,3 +35,18 @@ class ProductUpdateView(UpdateView):
             messages.success(request, 'Product successfully updated.', 'success')
         return super().dispatch(request, *args, **kwargs)
 
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'product/delete.html'
+    def get_success_url(self):
+        messages.success(self.request,"product delete successfuly",'success')
+        # print("Messages in session:", list(messages.get_messages(self.request)))
+        return reverse_lazy("product:product-list")
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductCreateUpdateForm
+    template_name = 'product/create.html'
+    def get_success_url(self):
+        messages.success(self.request,"product add successfully.",'success')
+        return reverse_lazy("product:product-list")

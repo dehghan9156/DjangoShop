@@ -131,16 +131,23 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+# settings.py
 
+# URL برای دسترسی به فایل‌های استاتیک
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
 
+# مسیر برای ذخیره فایل‌های استاتیک پس از اجرای collectstatic
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# مسیرهایی که فایل‌های استاتیک شما در آن‌ها قرار دارند (برای محیط توسعه)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # پوشه ای که در مرحله 1 ساختید
+]
+
+# تنظیمات فایل‌های رسانه‌ای (مثل تصاویر و فایل‌های آپلودی)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = [
-    BASE_DIR / "staticfiles",
-]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

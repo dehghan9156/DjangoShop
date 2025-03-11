@@ -11,6 +11,8 @@
                 <h2>{{ product.description }}</h2><br>
                 {% if request.user.is_staff %}
                     <a href="{% url 'product:product-update' product.pk %}" class="btn btn-primary">Update</a>
+                    <a href="{% url 'product:product-delete' product.pk %}" class="btn btn-primary">Delete</a>
+
                 {% endif %}
                 <a href="#" class="btn btn-primary">Primary</a>
                 <a href="#" class="btn btn-primary">Primary</a>
