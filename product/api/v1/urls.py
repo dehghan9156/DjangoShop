@@ -19,13 +19,11 @@ from django.urls import path, include
 from accounts.api.v1.urls import app_name
 from . import views
 
-app_name = 'product'
+app_name = 'api-v1'
 
 urlpatterns = [
-    path("",views.ProductListView.as_view(),name="product-list"),
-    path("detail/<int:pk>/",views.ProductDetailView.as_view(),name="product-detail"),
-    path("update/<int:pk>/",views.ProductUpdateView.as_view(),name='product-update'),
-    path("delete/<int:pk>/",views.ProductDeleteView.as_view(),name='product-delete'),
-    path("create/",views.ProductCreateView.as_view(),name='product-create'),
-    path("api/v1/",include('product.api.v1.urls'))
+    path("",views.ProductListApiView.as_view(),name="product-list-api"),
+    path("detail/<int:pk>/",views.ProductDetailApiView.as_view(),name="product-detail-api"),
+    path("create/",views.ProductCreateApiView.as_view(),name="product-create-api"),
+
 ]
