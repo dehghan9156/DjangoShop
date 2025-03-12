@@ -41,6 +41,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls",namespace='accounts')),
     path("product/",include("product.urls",namespace='product')),
+    path("orders/",include("orders.urls",namespace='orders')),
 
 
     # url for swagger document
