@@ -13,7 +13,6 @@
                         <div class="me-0.5"> <!-- اضافه کردن فاصله بیشتر -->
                             <h5>{{ basket.product.name }}</h5>
                             <p>Price: ${{ basket.product.price }}</p>
-                            <p>Quantity: {{ basket.quantity }}</p>  <!-- نمایش تعداد محصول -->
                             {% if basket.product.discount %}
                                 <p>Discount: ${{ basket.product.discount }}</p>
                             {% endif %}
@@ -32,6 +31,9 @@
 {#                                    {{ form.as_p }}#}
                                     <button type="submit" class="btn btn-primary ms-2">Update</button>
                                 </form>
+                            </div>
+                            <div>
+                                <a href="{% url 'orders:delete-product' basket.id %}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </div>

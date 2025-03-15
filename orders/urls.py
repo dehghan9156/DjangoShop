@@ -23,4 +23,5 @@ app_name = 'orders'
 urlpatterns = [
     path("",views.ShowBasketView.as_view(),name="show-basket"),
     path("add/<int:pk>/",views.CreateBasketView.as_view(),name="create-basket"),
+    path("delete/<int:pk>/",views.DeleteProductView.as_view(),name="delete-product"),
 ]

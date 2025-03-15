@@ -55,3 +55,9 @@ class ShowBasketView(LoginRequiredMixin, ListView):
             basket.quantity = quantity
             basket.save()
         return redirect("orders:show-basket")
+
+class DeleteProductView(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        basket = get_object_or_404(Basket,pk=pk)
+        basket.delete()
+        return redirect('orders:show-basket')
