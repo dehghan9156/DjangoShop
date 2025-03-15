@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            {% for basket in baskets %}
+                <div class="col-md-12 mb-4">
+                    <div class="d-flex align-items-center">
+                        <!-- تصویر محصول -->
+                        <img src="{{ basket.product.image }}" class="img-fluid"
+                             style="max-width: 200px; margin-right: 20px;" alt="{{ basket.product.name }}">
+
+                        <!-- نمایش اطلاعات محصول -->
+                        <div class="me-0.5"> <!-- اضافه کردن فاصله بیشتر -->
+                            <h5>{{ basket.product.name }}</h5>
+                            <p>Price: ${{ basket.product.price }}</p>
+                            <p>Quantity: {{ basket.quantity }}</p>  <!-- نمایش تعداد محصول -->
+                            {% if basket.product.discount %}
+                                <p>Discount: ${{ basket.product.discount }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- اطلاعات و فرم ویرایش تعداد -->
+                        <div class="d-flex align-items-center w-100 ms-4"> <!-- اضافه کردن فاصله بیشتر از سمت چپ -->
+                            <div class="me-3">
+                                <form method="post" class="d-flex align-items-center">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="basket_id" value="{{ basket.id }}">
+                                    <div class="form-group">
+                                        <input type="number" name="quantity" value="{{ basket.quantity }}"
+                                               class="form-control" min="1" style="max-width: 80px;">
+                                    </div>
+{#                                    {{ form.as_p }}#}
+                                    <button type="submit" class="btn btn-primary ms-2">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

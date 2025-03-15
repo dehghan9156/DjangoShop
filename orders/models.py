@@ -18,6 +18,9 @@ class Order(models.Model):
     status = models.CharField(choices=RELEVANCE_CHOICES,max_length=250)
     created_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.pk}-{self.profile.user.email}"
+
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
@@ -27,3 +30,7 @@ class Basket(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.pk}-{self.product.name}"

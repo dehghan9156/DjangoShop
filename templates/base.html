@@ -7,6 +7,11 @@
     <!-- Bootstrap CSS -->
     {% include 'bootstrapt.html' %}
     <style>
+        .alert {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
 
         body {
             display: flex;
@@ -29,7 +34,8 @@
 </head>
 <body>
 <!-- Header -->
-<nav class="navbar navbar-expand-lg" style="background-color: darkred; border-bottom: 1px solid #dee2e6; direction: ltr;">
+<nav class="navbar navbar-expand-lg"
+     style="background-color: darkred; border-bottom: 1px solid #dee2e6; direction: ltr;">
     <div class="container">
         {% if request.user.is_authenticated %}
             <a class="navbar-brand text-white" href="#">{{ request.user.username }}</a>
@@ -52,7 +58,7 @@
                     <a class="nav-link text-white" href="{% url 'product:product-create' %}">Add Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Contact</a>
+                    <a class="nav-link text-white" href="{% url 'orders:show-basket' %}">View YourBasket</a>
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
@@ -67,7 +73,6 @@
         </div>
     </div>
 </nav>
-
 
 
 <!-- Main Content -->
