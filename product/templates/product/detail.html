@@ -17,9 +17,9 @@
                 <a href="#" class="btn btn-primary">Primary</a>
             </div>
             <div class="col-md-2 text-center">
-                <form action={% url "orders:create-basket" product.pk%} method="post">
+                <form action={% url "orders:create-factor" product.pk%} method="post">
                     {% csrf_token %}
-                    <button class="btn btn-danger">Add To Basket</button>
+                    <button class="btn btn-danger">Add To factor</button>
                 </form>
             </div>
 

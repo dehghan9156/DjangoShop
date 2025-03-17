@@ -2,44 +2,57 @@
 {% block content %}
     <div class="container my-5">
         <div class="row">
-            {% for basket in baskets %}
-                <div class="col-md-12 mb-4">
-                    <div class="d-flex align-items-center">
-                        <!-- تصویر محصول -->
-                        <img src="{{ basket.product.image }}" class="img-fluid"
-                             style="max-width: 200px; margin-right: 20px;" alt="{{ basket.product.name }}">
+            <!-- لیست محصولات در سبد خرید -->
+            <div class="col-md-8">
+                {% for factor in factors %}
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex align-items-center border p-3 rounded shadow-sm bg-light">
+                            <!-- تصویر محصول -->
+                            <img src="{{ factor.product.image }}" class="img-fluid rounded"
+                                 style="max-width: 150px; margin-right: 20px;" alt="{{ factor.product.name }}">
 
-                        <!-- نمایش اطلاعات محصول -->
-                        <div class="me-0.5"> <!-- اضافه کردن فاصله بیشتر -->
-                            <h5>{{ basket.product.name }}</h5>
-                            <p>Price: ${{ basket.product.price }}</p>
-                            {% if basket.product.discount %}
-                                <p>Discount: ${{ basket.product.discount }}</p>
-                            {% endif %}
-                        </div>
-
-                        <!-- اطلاعات و فرم ویرایش تعداد -->
-                        <div class="d-flex align-items-center w-100 ms-4"> <!-- اضافه کردن فاصله بیشتر از سمت چپ -->
-                            <div class="me-3">
-                                <form method="post" class="d-flex align-items-center">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="basket_id" value="{{ basket.id }}">
-                                    <div class="form-group">
-                                        <input type="number" name="quantity" value="{{ basket.quantity }}"
-                                               class="form-control" min="1" style="max-width: 80px;">
-                                    </div>
-{#                                    {{ form.as_p }}#}
-                                    <button type="submit" class="btn btn-primary ms-2">Update</button>
-                                </form>
+                            <!-- نمایش اطلاعات محصول -->
+                            <div class="flex-grow-1">
+                                <h5>{{ factor.product.name }}</h5>
+                                <p>Price: <strong>${{ factor.product.price }}</strong></p>
+                                {% if factor.product.discount %}
+                                    <p class="text-danger">Discount: ${{ factor.product.discount }}</p>
+                                {% endif %}
                             </div>
-                            <div>
-                                <a href="{% url 'orders:delete-product' basket.id %}" class="btn btn-danger">Delete</a>
+
+                            <!-- فرم ویرایش تعداد -->
+                            <div class="d-flex align-items-center">
+                                <form method="post" class="d-flex align-items-center"
+                                      action="{% url 'orders:update-factor' factor.product.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="factor_id" value="{{ factor.id }}">
+                                    <input type="number" name="quantity" value="{{ factor.quantity }}"
+                                           class="form-control text-center" min="1"
+                                           style="max-width: 60px;" onchange="this.form.submit()">
+                                </form>
+                                <a href="{% url 'orders:delete-product' factor.id %}" class="btn btn-danger ms-3">Delete</a>
                             </div>
                         </div>
                     </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+            <!-- کادر کنار برای نمایش مجموع قیمت -->
+            <div class="col-md-4">
+                <div class="card shadow-lg p-3">
+                    <h4 class="text-center mb-3">Order Summary</h4>
+                    <hr>
+                    <p><strong>Total Price:</strong> ${{ total_factor }}</p>
+                    <p class="text-danger"><strong>Transport Cost:</strong> $52000+{{ total_factor }}</p>
+                    <h5 class="text-success"><strong>Final Price:</strong> ${{ final_price }}</h5>
+                    <hr>
+                    <div class="d-grid">
+                        <a href="{% url 'orders:order-summery' headerfactor_id %}" class="btn btn-primary btn-lg">Complete Payment</a>
+                    </div>
                 </div>
-                <hr>
-            {% endfor %}
+            </div>
+
         </div>
     </div>
 {% endblock %}

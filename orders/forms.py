@@ -1,9 +1,9 @@
 from django import forms
-from .models import Basket
+from .models import Factor
 
-class EdithBasketForm(forms.ModelForm):
+class EdithFactorForm(forms.ModelForm):
     class Meta:
-        model = Basket
+        model = Factor
         fields = ["quantity"]
         widgets = {
             'quantity': forms.NumberInput(attrs={'min': 1, 'class': 'form-control', 'style': 'max-width: 80px;'}),        }

@@ -21,7 +21,11 @@ from . import views
 app_name = 'orders'
 
 urlpatterns = [
-    path("",views.ShowBasketView.as_view(),name="show-basket"),
-    path("add/<int:pk>/",views.CreateBasketView.as_view(),name="create-basket"),
+    path("",views.ShowFactorView.as_view(),name="show-factor"),
+    path("add/<int:pk>/",views.CreateFactorView.as_view(),name="create-factor"),
     path("delete/<int:pk>/",views.DeleteProductView.as_view(),name="delete-product"),
+    path("update/<int:pk>/",views.UpdateFactorView.as_view(),name='update-factor'),
+
+    path("order/summery/<int:pk>/",views.OrderSummeryView.as_view(),name='order-summery'),
+    path("")
 ]

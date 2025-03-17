@@ -1,19 +1,13 @@
 from django.contrib import admin
-from .models import Order,OrderDetail,Basket
+from .models import HeaderFactor,Factor
 from django.contrib.admin import ModelAdmin
 
 
-class CustomOrder(ModelAdmin):
+class CustomHeaderFactor(ModelAdmin):
     search_fields = ("id","profile",)
 
-class CustomOrderDetail(ModelAdmin):
+class CustomFactor(ModelAdmin):
     search_fields = ("id",)
 
-class CustomBasket(ModelAdmin):
-    search_fields = ("id","profile","product")
-
-
-
-admin.site.register(Order,CustomOrder)
-admin.site.register(OrderDetail,CustomOrderDetail)
-admin.site.register(Basket,CustomBasket)
+admin.site.register(HeaderFactor,CustomHeaderFactor)
+admin.site.register(Factor,CustomFactor)
