@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path, include
 from accounts.api.v1.urls import app_name
 from . import views
+from .views import ZarinPalPaymentView, ZarinPalVerifyView
 
 app_name = 'orders'
 
@@ -27,5 +28,7 @@ urlpatterns = [
     path("update/<int:pk>/",views.UpdateFactorView.as_view(),name='update-factor'),
 
     path("order/summery/<int:pk>/",views.OrderSummeryView.as_view(),name='order-summery'),
-    path("")
+    path('payment/<int:pk>/', ZarinPalPaymentView.as_view(), name='payment'),
+    path("payment/verify/<int:pk>/", ZarinPalVerifyView.as_view(), name="payment-verify"),  # مسیر تأیید پرداخت
+    path("api/v1/",include("orders.api.v1"))
 ]
