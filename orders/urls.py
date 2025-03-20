@@ -30,5 +30,5 @@ urlpatterns = [
     path("order/summery/<int:pk>/",views.OrderSummeryView.as_view(),name='order-summery'),
     path('payment/<int:pk>/', ZarinPalPaymentView.as_view(), name='payment'),
     path("payment/verify/<int:pk>/", ZarinPalVerifyView.as_view(), name="payment-verify"),  # مسیر تأیید پرداخت
-    path("api/v1/",include("orders.api.v1"))
+    path("api/v1/",include("orders.api.v1.urls"))
 ]
