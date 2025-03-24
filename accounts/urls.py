@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/',views.UserLogoutView.as_view(),name='user-logout'),
 
     path('register/',views.UserRegisterView.as_view(),name='user-register'),
+    path('edit/profile/',views.EditProfileView.as_view(),name='edit-profile'),
     path('api/v1/',include('accounts.api.v1.urls'))
 ]

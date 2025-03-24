@@ -19,4 +19,5 @@ urlpatterns = [
     path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('change-password/',views.ChangePasswordView.as_view(),name='change-password'),
     path('profiel/',views.DisplayProfileUserView.as_view(),name='profile'),
+    path("confirm-user/<str:token>/",views.ConfirmTokenView.as_view(),name='confirm-token'),
 ]

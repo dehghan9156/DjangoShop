@@ -27,5 +27,7 @@ urlpatterns = [
     path("update/<int:pk>/",views.ProductUpdateView.as_view(),name='product-update'),
     path("delete/<int:pk>/",views.ProductDeleteView.as_view(),name='product-delete'),
     path("create/",views.ProductCreateView.as_view(),name='product-create'),
+
+    path("product/category/<int:pk>/",views.ProductCategoryShowView.as_view(),name='product-category'),
     path("api/v1/",include('product.api.v1.urls'))
 ]

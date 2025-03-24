@@ -13,3 +13,9 @@ class ProductObjectsSerializer(serializers.ModelSerializer):
         url = reverse_lazy("product:api-v1:product-detail-api",kwargs={'pk':obj.id})
         request = self.context.get('request')
         return request.build_absolute_uri(url)
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id","name"]

@@ -17,4 +17,4 @@ class Category(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return f"{self.id}--{self.name}"
+        return f"{self.name}"

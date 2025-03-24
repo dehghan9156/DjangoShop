@@ -1,7 +1,8 @@
 from django.views.generic import ListView,DetailView,UpdateView,DeleteView,CreateView
 from django.shortcuts import render,redirect
 from rest_framework.reverse import reverse_lazy
-
+from unicodedata import category
+from django.views import View
 from .models import Product,Category
 from .forms import ProductCreateUpdateForm
 from django.contrib import messages
@@ -50,3 +51,11 @@ class ProductCreateView(CreateView):
     def get_success_url(self):
         messages.success(self.request,"product add successfully.",'success')
         return reverse_lazy("product:product-list")
+
+class ProductCategoryShowView(View):
+    def get(self,request,pk):
+        category = Category.objects.get(pk=pk)
+        products = Product.objects.filter(category=category)
+        return render(request,'product/product-category.html',{'products':products})
+
+

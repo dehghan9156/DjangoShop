@@ -25,5 +25,9 @@ urlpatterns = [
     path("",views.ProductListApiView.as_view(),name="product-list-api"),
     path("detail/<int:pk>/",views.ProductDetailApiView.as_view(),name="product-detail-api"),
     path("create/",views.ProductCreateApiView.as_view(),name="product-create-api"),
-
+    path("category/", views.ShowCategoryApiView.as_view(), name="show-category-api"),
+    path("category/post/",views.PostCategoryApiView.as_view(),name="post-category-api"),
+    path("category/delete/<int:pk>/",views.DeleteCategoryApiView.as_view(),name="delete-category-api"),
+    path("category/update/<int:pk>/",views.UpdateCategoryApiView.as_view(),name="update-category-api"),
+    path("product/category/<int:pk>/",views.ProductCategoryApiView.as_view(),name="product-category-api"),
 ]

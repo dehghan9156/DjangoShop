@@ -7,10 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView,LogoutView
-from .forms import LoginUserForm,RegisterUserForm
+from .forms import LoginUserForm,RegisterUserForm,EditProfileForm
 from django.views.generic.edit import CreateView
 from django.contrib.auth import get_user_model
-
+from .models import Profile
 
 
 User = get_user_model()
@@ -58,9 +58,29 @@ class UserRegisterView(View):
         if form.is_valid():
             cd = form.cleaned_data
             user = User.objects.create_user(cd['email'], cd['password'])
+
             messages.success(request, 'User Register Successfully', 'success')
             return redirect('accounts:index-accounts')
         else:
             messages.error(request, 'User not found', 'error')
             return render(request, 'accounts/user_register.html', {'form': form})
+
+
+class EditProfileView(View):
+
+    def get(self,request):
+        profile = Profile.objects.get(user=self.request.user)
+        form = EditProfileForm(instance=profile)
+        return render(request,'accounts/profile.html',{'form':form,'profile':profile})
+
+    def post(self,request):
+        profile = Profile.objects.get(user=self.request.user)
+        form = EditProfileForm(request.POST,instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"profile edit successfully.",'success')
+            return render(request,'accounts/profile.html',{'form':form,'profile':profile})
+        else:
+            messages.error(request,"information not valid.",'error')
+            return render(request,'accounts/profile.html',{'form':form,'profile':profile})
 

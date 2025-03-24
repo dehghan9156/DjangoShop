@@ -11,10 +11,9 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.generics import CreateAPIView,ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-
 from accounts.models import Profile
 from orders.models import HeaderFactor,Factor
-from product.models import Product
+from product.models import Product,Category
 from .serialization import HeaderFactorSerializer,FactorSerializer
 
 
@@ -63,3 +62,4 @@ class DeleteFactorView(APIView):
             return Response({'message':'factor delete successfully.'},status=status.HTTP_200_OK)
         else:
             return Response({'error':'factor does not exit.'},status=status.HTTP_404_NOT_FOUND)
+

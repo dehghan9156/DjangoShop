@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
 from faker import Faker
 from product.models import Product, Category
-import random,time,requests
-
+import random, requests
+from django.conf import settings
 
 class Command(BaseCommand):
     help = "Inserting dummy data"
@@ -11,33 +11,35 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.fake = Faker()
 
+    def get_random_product_image(self):
+        RANDOM_USER_API_URL = "https://randomuser.me/api/portraits/men/"
+        random_number = random.randint(1, 100)  # ایجاد یک عدد تصادفی برای انتخاب تصویر
+        image_url = f"{RANDOM_USER_API_URL}{random_number}.jpg"
+        return image_url
+
     def handle(self, *args, **options):
-        category_list = [
-            "Digital Goods",
-            "Clothing",
-            "Books",
-            "Sports",
-            "Supermarket"
-        ]
+        category_list = ["Digital Goods", "Clothing", "Books", "Sports", "Supermarket"]
 
         for name in category_list:
             category, created = Category.objects.get_or_create(
-                name=name,
-                description=self.fake.paragraph(nb_sentences=5)
+                name=name, description=self.fake.paragraph(nb_sentences=5)
             )
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f"Category created: {category.name}"))
+                self.stdout.write(self.style.SUCCESS(f"✅ دسته جدید ایجاد شد: {category.name}"))
             else:
-                self.stdout.write(self.style.SUCCESS(f"Category already exists: {category.name}"))
+                self.stdout.write(self.style.SUCCESS(f"ℹ️ دسته از قبل وجود دارد: {category.name}"))
 
             for _ in range(6):
-                image_url = f"https://randomuser.me/api/portraits/men/{self.fake.random_int(1, 100)}.jpg"
-                product = Product.objects.create(
+                image_url = self.get_random_product_image()
+
+                Product.objects.create(
                     category=category,
                     name=self.fake.name(),
                     description=self.fake.paragraph(nb_sentences=5),
                     price=self.fake.random_number(digits=5),
                     stock=self.fake.random_int(min=0, max=100),
-                    image = image_url
+                    image=image_url  # لینک تصویر شخص
                 )
+
+                self.stdout.write(self.style.SUCCESS(f"🛒 محصول ایجاد شد: {image_url}"))
