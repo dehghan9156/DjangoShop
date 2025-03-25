@@ -40,7 +40,12 @@ class CreateFactorView(LoginRequiredMixin, View):
 class ShowFactorView(LoginRequiredMixin, View):
     def get(self, request):
         profile = Profile.objects.get(user=self.request.user)
-        headerfactor = get_object_or_404(HeaderFactor, profile=profile)
+        # headerfactor = get_object_or_404(HeaderFactor, profile=profile)
+        headerfactor = HeaderFactor.objects.filter(profile=profile).first()
+        if not headerfactor:
+            messages.info(request, "You have not created your shopping cart yet.")
+            return render(request, "orders/empty_cart.html")
+
         factors = Factor.objects.filter(headerfactor=headerfactor)
         lst = []
         for factor in factors:
@@ -64,7 +69,12 @@ class UpdateFactorView(View):
     def post(self,request,pk):
         profile = Profile.objects.get(user=self.request.user)
         product = get_object_or_404(Product,pk=pk)
-        headerfactor = get_object_or_404(HeaderFactor,profile=profile)
+        # headerfactor = get_object_or_404(HeaderFactor,profile=profile)
+        headerfactor = HeaderFactor.objects.filter(profile=profile).first()
+        if not headerfactor:
+            messages.info(request, "You have not created your shopping cart yet.")
+            return render(request, "orders/empty_cart.html")
+
         factor = Factor.objects.filter(headerfactor=headerfactor,product=product).first()
         new_quantity = request.POST.get('quantity',1)
         if factor:
@@ -82,7 +92,12 @@ class UpdateFactorView(View):
 
 class OrderSummeryView(LoginRequiredMixin,View):
     def get(self,request,pk):
-        headerfactor = HeaderFactor.objects.get(pk=pk)
+        profile = get_object_or_404(Profile,user=self.request.user)
+        # headerfactor = HeaderFactor.objects.get(pk=pk)
+        headerfactor = HeaderFactor.objects.filter(profile=profile).first()
+        if not headerfactor:
+            messages.info(request, "You have not created your shopping cart yet.")
+            return render(request, "orders/empty_cart.html")
         factors = Factor.objects.filter(headerfactor=headerfactor)
         lst=[]
         for factor in factors:
@@ -166,8 +181,8 @@ class ZarinPalVerifyView(View):
         if "data" in result and "code" in result["data"]:
             if result["data"]["code"] == 100:
                 headerfactor.status = "paid"
-                Factor.objects.filter(headerfactor=headerfactor).delete()
                 headerfactor.save()
+                Factor.objects.filter(headerfactor=headerfactor).delete()
                 return render(request, "payment/success.html", {"transId": result["data"]["ref_id"]})
             else:
                 return render(request, "payment/error.html", {"message": f"خطای پرداخت: {result['data']} "})

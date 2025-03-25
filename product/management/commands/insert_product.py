@@ -12,10 +12,11 @@ class Command(BaseCommand):
         self.fake = Faker()
 
     def get_random_product_image(self):
-        RANDOM_USER_API_URL = "https://randomuser.me/api/portraits/men/"
+        # RANDOM_USER_API_URL = "https://randomuser.me/api/portraits/men/"
         random_number = random.randint(1, 100)  # ایجاد یک عدد تصادفی برای انتخاب تصویر
-        image_url = f"{RANDOM_USER_API_URL}{random_number}.jpg"
-        return image_url
+        # image_url = f"{RANDOM_USER_API_URL}{random_number}.jpg"
+        # return image_url
+        return f"https://fakeimg.pl/250x250/?text=Product{random_number}"
 
     def handle(self, *args, **options):
         category_list = ["Digital Goods", "Clothing", "Books", "Sports", "Supermarket"]

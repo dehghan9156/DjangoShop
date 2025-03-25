@@ -6,7 +6,10 @@ from product.models import Product,Category
 def cart_count(request):
     if request.user.is_authenticated:
         profile = get_object_or_404(Profile, user=request.user)
-        headerfactor = get_object_or_404(HeaderFactor, profile=profile)
+        # headerfactor = get_object_or_404(HeaderFactor, profile=profile)
+        headerfactor = HeaderFactor.objects.filter(profile=profile).first()
+        if not headerfactor:
+            headerfactor = None
         factor = Factor.objects.filter(headerfactor=headerfactor)
         cart_count = factor.count()
     else:
