@@ -32,8 +32,8 @@ class ProductUpdateView(UpdateView):
         if not request.user.is_staff:
             messages.error(request, 'You cannot edit product', 'error')
             return redirect("product:product-list")
-        else:
-            messages.success(request, 'Product successfully updated.', 'success')
+        # else:
+        #     messages.success(request, 'Product successfully updated.', 'success')
         return super().dispatch(request, *args, **kwargs)
 
 class ProductDeleteView(DeleteView):

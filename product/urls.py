@@ -29,5 +29,5 @@ urlpatterns = [
     path("create/",views.ProductCreateView.as_view(),name='product-create'),
 
     path("product/category/<int:pk>/",views.ProductCategoryShowView.as_view(),name='product-category'),
-    path("api/v1/",include('product.api.v1.urls'))
+    path("api/v1/",include('product.api.v1.urls',namespace='api-v1'))
 ]

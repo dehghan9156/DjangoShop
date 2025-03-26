@@ -27,12 +27,13 @@ class ProductListApiView(generics.ListAPIView):
 class ProductDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductObjectsSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     def get_object(self):
         obj = get_object_or_404(self.queryset, pk=self.kwargs.get("pk"))
         return obj
 
 class ProductCreateApiView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductObjectsSerializer
 
     def post(self, request, *args, **kwargs):
