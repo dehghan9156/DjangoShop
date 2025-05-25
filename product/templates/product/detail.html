@@ -42,7 +42,7 @@
                                 {% endif %}
                                 <form action="{% url 'orders:create-factor' product.pk %}" method="post">
                                     {% csrf_token %}
-                                    <button class="btn btn-outline-danger px-4 py-2 rounded shadow-sm">Add to factor</button>
+                                    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-sm">Add to factor</button>
                                 </form>
                             </div>
                         </div>

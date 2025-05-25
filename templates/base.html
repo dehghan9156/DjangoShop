@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--    test github-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django Project{% endblock %}</title>
@@ -55,10 +56,11 @@
                 <li class="nav-item me-3">
                     <a class="nav-link text-white" href="{% url 'product:product-list' %}">Home</a>
                 </li>
+                {%if request.user.is_staff and request.user.is_authenticated  %}
                 <li class="nav-item me-3">
                     <a class="nav-link text-white" href="{% url 'product:product-create' %}">Add Product</a>
                 </li>
-
+                {%endif%}
                 <!-- Dropdown for Categories -->
                 <li class="nav-item dropdown me-3">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"

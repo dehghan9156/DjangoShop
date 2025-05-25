@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from rest_framework.reverse import reverse_lazy
 from unicodedata import category
 from django.views import View
-from .models import Product,Category
+from .models import *
 from .forms import ProductCreateUpdateForm
 from django.contrib import messages
 

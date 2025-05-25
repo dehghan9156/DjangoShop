@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'orders.context_processors.cart_count',
                 'product.context_processors.category_list',
+
             ],
         },
     },
@@ -162,11 +163,13 @@ REST_FRAMEWORK = {
     ]
 }
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-# settings.py
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 25  # یا پورت 587
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
+# # settings.py
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "localhost"
+# EMAIL_PORT = 25  # یا پورت 587
+# EMAIL_USE_TLS = False
+# EMAIL_USE_SSL = False
+# EMAIL_HOST_USER = ""
+# EMAIL_HOST_PASSWORD = ""
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
