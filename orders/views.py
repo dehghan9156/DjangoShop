@@ -1,4 +1,4 @@
-from django.contrib.messages import success
+﻿from django.contrib.messages import success
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.reverse import reverse_lazy
@@ -13,7 +13,7 @@ from django.db.models import Sum
 from collections import Counter
 from .forms import EdithFactorForm
 import requests
-
+# test test
 
 class CreateFactorView(LoginRequiredMixin, View):
     def post(self, request, pk):
