@@ -14,9 +14,8 @@ class Command(BaseCommand):
     def get_random_product_image(self):
         # RANDOM_USER_API_URL = "https://randomuser.me/api/portraits/men/"
         random_number = random.randint(1, 100)  # ایجاد یک عدد تصادفی برای انتخاب تصویر
-        # image_url = f"{RANDOM_USER_API_URL}{random_number}.jpg"
         # return image_url
-        return f"https://fakeimg.pl/250x250/?text=Product{random_number}"
+        return f"https://placehold.co/250x250?text=Product+{random_number}"
 
     def handle(self, *args, **options):
         category_list = ["Digital Goods", "Clothing", "Books", "Sports", "Supermarket"]
@@ -40,7 +39,7 @@ class Command(BaseCommand):
                     description=self.fake.paragraph(nb_sentences=5),
                     price=self.fake.random_number(digits=5),
                     stock=self.fake.random_int(min=0, max=100),
-                    image=image_url  # لینک تصویر شخص
+                    external_image_url=image_url  # لینک تصویر شخص
                 )
 
                 self.stdout.write(self.style.SUCCESS(f"🛒 محصول ایجاد شد: {image_url}"))

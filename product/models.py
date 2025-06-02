@@ -8,6 +8,14 @@ class Product(models.Model):
     discount = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='products/',blank=True,null=True)  # فیلد تصویر
+    external_image_url = models.URLField(blank=True, null=True)
+
+    def image_display_url(self):
+        if self.image:
+            return self.image.url
+        elif self.external_image_url:
+            return self.external_image_url
+        return None
 
     def __str__(self):
         return f"{self.id}--{self.name}"
